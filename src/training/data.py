@@ -6,6 +6,7 @@ import os
 import random
 import sys
 import braceexpand
+from imageio.v3 import imread
 from dataclasses import dataclass
 from multiprocessing import Value
 
@@ -42,7 +43,7 @@ class CsvDataset(Dataset):
         return len(self.captions)
 
     def __getitem__(self, idx):
-        images = self.transforms(Image.open(str(self.images[idx])))
+        images = self.transforms(imread(self.images[idx]))
         texts = self.tokenize([str(self.captions[idx])])[0]
         return images, texts
 
